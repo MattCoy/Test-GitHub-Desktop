@@ -18,11 +18,11 @@
 		        die('Erreur : ' . $e->getMessage());
 		}
 
-		if(isset($_POST['titre'])){
+		if(isset($_POST['titre']) AND !empty($_POST['titre'])){
 			//on va chercher tout les articles qui ont pour titre $_POST['titre']
 			//comme on va intégrer des variables, on effectue une requête préparée
 			$reponse = $bdd->prepare('SELECT * FROM articles WHERE title = :title');
-			$reponse->execute(array('title'=>$_POST['titre']));
+			$reponse->bindValue(':title', $_POST['titre'], PDO::PARAM_STR);
 			while($donnees = $reponse->fetch()){
 				?>
 					<article>
